@@ -22,7 +22,7 @@ The first request the "caller" (in this case the Big OTA) does is to perform a h
 -> Handshake
 The handshake request, like all requests, is performed as a POST HTTP request using the HTTP Basic Authentication credentials provided in the endpoint URL. The capabilities it defines are given as "optional" and "required".
 
-```json
+```js
 {
   "type": "Handshake",
   "data": {
@@ -37,7 +37,7 @@ The handshake request, like all requests, is performed as a POST HTTP request us
 <- Handshake
 The receiver, having received the list of capabilities now matches them against their own implemented capabilities and returns the "negotiated" list of capabilities this connection will support, along with a list of products. The key on the `products` dictionary indicated the ID used in future calls. The product information returned at this stage is important only for 
 
-```json
+```js
 {
   "type": "Handshake",
   "data": {
@@ -62,7 +62,7 @@ The receiver, having received the list of capabilities now matches them against 
 
 If the required capabilities were not met, the server should respond with an error response, for example:
 
-```json
+```js
 
 {
   "type": "Handshake",
