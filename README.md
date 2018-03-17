@@ -1,8 +1,5 @@
 # DRAFT OpenBooking API Protocol
 
-Being a protocol there will always be a "caller" and "receiver". In the docs I use "->" to indicate a request from the caller to the receiver, and "<-" to indicate the response.
-
-
 ## Handshake Example
 
 For anyone getting started with the protocol, it would go along the lines of:
@@ -19,7 +16,7 @@ Or, more interestingly:
 
 The first request the "caller" (in this case the Big OTA) does is to perform a handshake. This tells the "receiver" (in this case the Supplier) what capabilities the caller supports, and allows the receiver to respond with their negotiated capabilities and product list so mapping can start.
 
-### -> Handshake
+### Request
 The handshake request, like all requests, is performed as a POST HTTP request using the HTTP Basic Authentication credentials provided in the endpoint URL. The capabilities it defines are given as "optional" and "required".
 
 ```json
@@ -27,14 +24,32 @@ The handshake request, like all requests, is performed as a POST HTTP request us
   "type": "Handshake",
   "data": {
     "capabilities": {
-      "optional": [ "pickups", "dynamic-pricing", "custom-fields", "travelconnect/content" ],
-      "required": [ "age-categories", "availability", "batch-availability", "reservation" ]
+      "optional": [
+        "contact_info",
+        "pickups",
+        "departure_times",
+        "travel_date",
+        "dynamic_pricing",
+        "custom_fields",
+        "ticket_barcodes",
+        "booking_barcode",
+        "travelconnect/content"
+      ],
+      "required": [
+        "age_categories",
+        "availability",
+        "batch_availability",
+        "reservation"
+      ]
     }
   }
 }
 ```
 
-### <- Handshake
+Optional capabilities indicate the caller supports, and can provide these, if the receiver requires them.
+Required capabilities indicate the receiver MUST support these for every product.
+
+### Response
 The receiver, having received the list of capabilities now matches them against their own implemented capabilities and returns the "negotiated" list of capabilities this connection will support per product. The key on the `products` dictionary indicated the ID used in future calls.
 
 ```json
@@ -46,15 +61,16 @@ The receiver, having received the list of capabilities now matches them against 
         "code": "TOUR12352",
         "name": "Some tour name",
         "description": "Something that helps identify this product for mapping",
-        "capabilities": [ "age-categories", "reservation", "pickups" ],
-        "age-categories": [ "adult", "child" ]
+        "capabilities": [ "travel_date", "contact_info", "age_categories", "reservation", "pickups", "booking_barcode" ],
+        "age_categories": [ "adult", "child" ],
+        "departure_times": [ "09:00", "12:00", "14:00", "18:00" ]
       },
       "12353": {
         "code": "ATTRACTION12353",
         "name": "Some attraction name",
         "description": "Something that helps identify this product for mapping",
-        "capabilities": [ "age-categories" ],
-        "age-categories": [ "adult" ]
+        "capabilities": [ "travel_date", "contact_info", "age_categories", "ticket_barcodes" ],
+        "age_categories": [ "adult" ]
       }
     }
   }
@@ -63,22 +79,41 @@ The receiver, having received the list of capabilities now matches them against 
 
 Only products that match the required capabilities should be returned.
 
-## Booking Confirmation
+## Booking Confirmation Example
 
-A booking confirmation is 
+A booking confirmation is
+
+### Request
 
 ```json
 {
   "type": "BookingConfirmation",
-  "capabilities": [ "age-categories", "reservation", "pickups" ],
+  "capabilities": [ "contact_info", "age_categories", "reservation", "pickups" ],
   "data": {
     "booking": {
       "reference": "TEST123",
-      ...
+      "product": "TOUR12352",
+      "travel_date": "2018-10-07",
+      "departure_time": "09:00",
+      "pickup": {
+        "lodging": "Hilton Garden Inn",
+        "address": "401 S San Fernando Blvd, Burbank, CA 91502, USA"
+      },
+      "age_categories": {
+        "adult": 2,
+        "child": 1
+      },
+      "contact_info": {
+        "customer": "Mr. John Smith",
+        "email": "john.smith@example.com",
+        "mobile": "+17345551212"
+      }
     }
   }
 }
 ```
+
+### Response
 
 ## Capabilities
 
