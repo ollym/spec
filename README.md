@@ -105,7 +105,8 @@ A booking confirmation is
       "contact_info": {
         "customer": "Mr. John Smith",
         "email": "john.smith@example.com",
-        "mobile": "+17345551212"
+        "mobile": "+17345551212",
+        "locale": "en-GB"
       }
     }
   }
