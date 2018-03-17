@@ -69,8 +69,7 @@ The receiver, having received the list of capabilities now matches them against 
         "code": "ATTRACTION12353",
         "name": "Some attraction name",
         "description": "Something that helps identify this product for mapping",
-        "capabilities": [ "travel_date", "contact_info", "age_categories", "ticket_barcodes" ],
-        "age_categories": [ "adult" ]
+        "capabilities": [ "travel_date", "contact_info", "ticket_barcodes" ]
       }
     }
   }
@@ -91,7 +90,7 @@ A booking confirmation is
   "capabilities": [ "contact_info", "age_categories", "reservation", "pickups" ],
   "data": {
     "booking": {
-      "reference": "TEST123",
+      "agent_reference": "TEST312312123",
       "product": "TOUR12352",
       "travel_date": "2018-10-07",
       "departure_time": "09:00",
@@ -114,6 +113,20 @@ A booking confirmation is
 ```
 
 ### Response
+
+```json
+{
+  "type": "BookingConfirmation",
+  "capabilities": [ "contact_info", "age_categories", "reservation", "pickups" ],
+  "data": {
+    "booking": {
+      "supplier_reference": "TEST1231232",
+      "notes": "Please meet at 08:45 in the Hilton Garden Inn car park, round the front.",
+      "barcode": "TESTBARCODE213312"
+    }
+  }
+}
+```
 
 ## Capabilities
 
