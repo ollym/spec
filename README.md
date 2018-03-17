@@ -129,6 +129,32 @@ A booking confirmation is
 }
 ```
 
+## Booking Cancellation Example
+
+### Request
+
+```json
+{
+  "type": "BookingCancellation",
+  "capabilities": [ "contact_info", "age_categories", "reservation", "pickups" ],
+  "data": {
+    "booking": {
+      "supplier_reference": "TEST1231232",
+    }
+  }
+}
+```
+
+### Response
+
+```json
+{
+  "type": "BookingCancellation",
+  "capabilities": [ "contact_info", "age_categories", "reservation", "pickups" ],
+  "data": { }
+}
+```
+
 ## Capabilities
 
 Capabilities underpin the OpenBooking API Protocol. They allow the specification to remain simple for those getting started, whilst enabling almost unlimited expansion.
