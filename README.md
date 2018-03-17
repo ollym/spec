@@ -19,10 +19,10 @@ Or, more interestingly:
 
 The first request the "caller" (in this case the Big OTA) does is to perform a handshake. This tells the "receiver" (in this case the Supplier) what capabilities the caller supports, and allows the receiver to respond with their negotiated capabilities and product list so mapping can start.
 
--> Handshake
+#### -> Handshake
 The handshake request, like all requests, is performed as a POST HTTP request using the HTTP Basic Authentication credentials provided in the endpoint URL. The capabilities it defines are given as "optional" and "required".
 
-```js
+```json
 {
   "type": "Handshake",
   "data": {
@@ -34,10 +34,10 @@ The handshake request, like all requests, is performed as a POST HTTP request us
 }
 ```
 
-<- Handshake
+#### <- Handshake
 The receiver, having received the list of capabilities now matches them against their own implemented capabilities and returns the "negotiated" list of capabilities this connection will support, along with a list of products. The key on the `products` dictionary indicated the ID used in future calls. The product information returned at this stage is important only for 
 
-```js
+```json
 {
   "type": "Handshake",
   "data": {
@@ -62,7 +62,7 @@ The receiver, having received the list of capabilities now matches them against 
 
 If the required capabilities were not met, the server should respond with an error response, for example:
 
-```js
+```json
 
 {
   "type": "Handshake",
