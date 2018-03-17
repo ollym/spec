@@ -41,7 +41,7 @@ The receiver, having received the list of capabilities now matches them against 
 {
   "type": "Handshake",
   "data": {
-    "capabilities": [ "age-categories", "reservation", "pickups" ]
+    "capabilities": [ "age-categories", "reservation", "pickups" ],
     "products": {
       "12352": {
         "code": "TOUR12352",
